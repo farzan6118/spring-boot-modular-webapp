@@ -7,16 +7,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Application" />
+        <module name="thymeleaf-one" />
+        <module name="thymeleaf-two" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="Application" target="11" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="Application" options="-parameters" />
+      <module name="Application" options="" />
+      <module name="thymeleaf-one" options="-parameters" />
+      <module name="thymeleaf-two" options="-parameters" />
     </option>
   </component>
 </project>
