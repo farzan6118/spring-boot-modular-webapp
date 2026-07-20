@@ -14,7 +14,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="Application" options="" />
+      <module name="spring-boot-modular-webapp" options="" />
       <module name="thymeleaf-one" options="-parameters" />
       <module name="thymeleaf-two" options="-parameters" />
     </option>
