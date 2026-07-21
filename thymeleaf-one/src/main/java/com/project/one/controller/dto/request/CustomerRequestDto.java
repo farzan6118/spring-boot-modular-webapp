@@ -6,26 +6,31 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Getter
 @Setter
 public class CustomerRequestDto {
-    @NotBlank(message = "First name is required")
-    @Size(max = 50, message = "First name must be at most 50 characters")
+
+    @NotNull(message = "uuid is required")
+    private UUID uuid;
+
+    @NotNull(message = "Firstname is required")
+    @Size(max = 50, message = "Firstname must be at most 50 characters")
     private String firstname;
 
-    @NotBlank(message = "Last name is required")
-    @Size(max = 50, message = "Last name must be at most 50 characters")
+    @NotNull(message = "Lastname is required")
+    @Size(max = 50, message = "Lastname must be at most 50 characters")
     private String lastname;
 
     @NotNull(message = "Gender is required")
     private Gender gender;
 
-    @NotBlank(message = "Email is required")
+    @NotNull(message = "Email is required")
     @Email(message = "Invalid email format")
     private String email;
 
-    @NotBlank(message = "National code is required")
+    @NotNull(message = "National code is required")
     @Size(min = 10, max = 10, message = "National code must be exactly 10 characters")
     private String nationalCode;
 

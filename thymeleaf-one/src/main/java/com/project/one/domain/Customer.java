@@ -20,7 +20,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Customer extends Auditable<Integer> {
+public class Customer extends BaseEntity<Integer> {
 
     @Column(nullable = false)
     private String firstname;
