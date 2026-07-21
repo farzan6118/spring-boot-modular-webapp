@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -18,16 +19,17 @@ public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository repository;
 
-    @Cacheable("customer")
     @Override
-    public CustomerResponseDto findById(Integer id) {
-        Customer response = repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Customer not found with id: " + id));
+    @Cacheable("customer")
+    public CustomerResponseDto findByUuid(UUID uuid) {
+        Customer response = repository.findByUuid(uuid)
+                .orElseThrow(() -> new IllegalArgumentException("Customer not found with id: " + uuid));
         return mapToDto(response);
     }
 
     private CustomerResponseDto mapToDto(Customer customer) {
         CustomerResponseDto dto = new CustomerResponseDto();
+        dto.setUuid(customer.getUuid());
         dto.setFirstname(customer.getFirstname());
         dto.setLastname(customer.getLastname());
         dto.setEmail(customer.getEmail());
@@ -39,6 +41,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     private Customer mapToEntity(CustomerRequestDto requestDto) {
         Customer customer = new Customer();
+        customer.setUuid(requestDto.getUuid());
         customer.setFirstname(requestDto.getFirstname());
         customer.setLastname(requestDto.getLastname());
         customer.setEmail(requestDto.getEmail());
@@ -63,9 +66,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Transactional
     @Override
-    public void update(Integer id, CustomerRequestDto requestDto) {
-        Customer customer = repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Customer not found with id: " + id));
+    public void update(UUID uuid, CustomerRequestDto requestDto) {
+        Customer customer = repository.findByUuid(uuid)
+                .orElseThrow(() -> new IllegalArgumentException("Customer not found with uuid: " + uuid));
 
         customer.setFirstname(requestDto.getFirstname());
         customer.setLastname(requestDto.getLastname());
@@ -78,12 +81,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Transactional
     @Override
-    public void delete(Integer id) {
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
-        } else {
-            throw new IllegalArgumentException("Customer not found with id: " + id);
-        }
+    public void delete(UUID uuid) {
+        Customer customer = repository.findByUuid(uuid)
+                .orElseThrow(() -> new IllegalArgumentException("Customer not found with uuid: " + uuid));
+        repository.delete(customer);
     }
 
     @Override

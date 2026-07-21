@@ -5,10 +5,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Getter
 @Setter
 public class CustomerResponseDto {
+    private UUID uuid;
     private String firstname;
     private String lastname;
     private Gender gender;

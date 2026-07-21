@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @Controller
 @RequestMapping
 @RequiredArgsConstructor
@@ -63,16 +65,16 @@ public class CustomerController {
         return "redirect:/index";
     }
 
-    @GetMapping("/edit/{id}")
-    public String showUpdateForm(@PathVariable Integer id, Model model) {
-        CustomerResponseDto responseDto = customerService.findById(id);
+    @GetMapping("/edit/{uuid}")
+    public String showUpdateForm(@PathVariable UUID uuid, Model model) {
+        CustomerResponseDto responseDto = customerService.findByUuid(uuid);
         model.addAttribute("customer", responseDto);
         model.addAttribute("genders", Gender.values());
         return "update-user";
     }
 
-    @PostMapping("/update/{id}")
-    public String updateUser(@PathVariable Integer id,
+    @PostMapping("/update/{uuid}")
+    public String updateUser(@PathVariable UUID uuid,
                              @Valid @ModelAttribute("customer") CustomerRequestDto requestDto,
                              BindingResult result,
                              Model model) {
@@ -80,13 +82,13 @@ public class CustomerController {
             model.addAttribute("genders", Gender.values());
             return "update-user";
         }
-        customerService.update(id, requestDto);
+        customerService.update(uuid, requestDto);
         return "redirect:/index";
     }
 
-    @GetMapping("/delete/{id}")
-    public String deleteUser(@PathVariable Integer id) {
-        customerService.delete(id);
+    @GetMapping("/delete/{uuid}")
+    public String deleteUser(@PathVariable UUID uuid) {
+        customerService.delete(uuid);
         return "redirect:/index";
     }
 }
